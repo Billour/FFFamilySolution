@@ -1,0 +1,10 @@
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Library\bin\Debug\FFF.Library.dll
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Library\bin\Debug\FFF.Library.pdb
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Library\obj\Debug\ResolveAssemblyReference.cache
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Library\obj\Debug\FFF.Library.dll
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Library\obj\Debug\FFF.Library.pdb
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Library\bin\Debug\Microsoft.Http.dll
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Library\bin\Debug\Microsoft.Http.Extensions.dll
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Library\bin\Debug\Microsoft.Runtime.Serialization.Json.dll
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Library\bin\Debug\Microsoft.ServiceModel.Http.dll
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Library\bin\Debug\Microsoft.ServiceModel.WebHttp.dll

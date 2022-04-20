@@ -1,0 +1,14 @@
+﻿<xapCache source="D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Prism.Silverlight\Bin\Debug\FFF.Prism.Silverlight.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="1/20/2011 10:08:43 AM">
+  <file source="D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Prism.Silverlight\obj\Debug\FFF.Prism.Silverlight.dll" archivePath="FFF.Prism.Silverlight.dll" lastWriteTime="1/20/2011 10:08:42 AM" />
+  <file source="D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Silverlight.Core\Bin\Debug\FFF.Silverlight.Core.dll" archivePath="FFF.Silverlight.Core.dll" lastWriteTime="1/20/2011 10:08:04 AM" />
+  <file source="D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Silverlight.Library\Bin\Debug\FFF.Silverlight.Library.dll" archivePath="FFF.Silverlight.Library.dll" lastWriteTime="1/20/2011 10:08:06 AM" />
+  <file source="C:\Prism\Bin\Silverlight\Microsoft.Practices.Prism.dll" archivePath="Microsoft.Practices.Prism.dll" lastWriteTime="11/10/2010 9:03:36 AM" />
+  <file source="C:\Prism\Bin\Silverlight\Microsoft.Practices.Prism.MefExtensions.dll" archivePath="Microsoft.Practices.Prism.MefExtensions.dll" lastWriteTime="11/10/2010 9:03:34 AM" />
+  <file source="C:\Prism\Bin\Silverlight\Microsoft.Practices.ServiceLocation.dll" archivePath="Microsoft.Practices.ServiceLocation.dll" lastWriteTime="11/9/2010 9:22:08 PM" />
+  <file source="C:\Prism\Bin\Silverlight\Microsoft.Practices.Unity.Silverlight.dll" archivePath="Microsoft.Practices.Unity.Silverlight.dll" lastWriteTime="11/9/2010 9:22:10 PM" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.ComponentModel.Composition.dll" archivePath="System.ComponentModel.Composition.dll" lastWriteTime="8/26/2010 2:17:48 AM" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.ComponentModel.Composition.Initialization.dll" archivePath="System.ComponentModel.Composition.Initialization.dll" lastWriteTime="8/26/2010 2:17:48 AM" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.dll" archivePath="System.Windows.Controls.dll" lastWriteTime="8/26/2010 2:17:48 AM" />
+  <file source="D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Silverlight.Library\Bin\Debug\FFF.Silverlight.Entity.dll" archivePath="FFF.Silverlight.Entity.dll" lastWriteTime="1/15/2011 10:45:40 AM" />
+  <file source="D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Prism.Silverlight\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="1/15/2011 12:40:05 PM" />
+</xapCache>

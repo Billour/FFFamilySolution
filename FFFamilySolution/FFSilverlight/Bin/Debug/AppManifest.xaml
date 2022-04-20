@@ -1,0 +1,31 @@
+﻿<Deployment xmlns="http://schemas.microsoft.com/client/2007/deployment" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" EntryPointAssembly="FFSilverlight" EntryPointType="FFSilverlight.App" RuntimeVersion="4.0.50826.0">
+  <Deployment.Parts>
+    <AssemblyPart x:Name="FFSilverlight" Source="FFSilverlight.dll" />
+    <AssemblyPart x:Name="FFF.Silverlight.Http" Source="FFF.Silverlight.Http.dll" />
+    <AssemblyPart x:Name="FFF.Silverlight.Library" Source="FFF.Silverlight.Library.dll" />
+    <AssemblyPart x:Name="Microsoft.Expression.Drawing" Source="Microsoft.Expression.Drawing.dll" />
+    <AssemblyPart x:Name="Microsoft.Expression.Interactions" Source="Microsoft.Expression.Interactions.dll" />
+    <AssemblyPart x:Name="Microsoft.Practices.Prism" Source="Microsoft.Practices.Prism.dll" />
+    <AssemblyPart x:Name="Microsoft.Practices.Prism.GuidanceTools" Source="Microsoft.Practices.Prism.GuidanceTools.dll" />
+    <AssemblyPart x:Name="Microsoft.Practices.Prism.Interactivity" Source="Microsoft.Practices.Prism.Interactivity.dll" />
+    <AssemblyPart x:Name="Microsoft.Practices.Prism.MefExtensions" Source="Microsoft.Practices.Prism.MefExtensions.dll" />
+    <AssemblyPart x:Name="Microsoft.Practices.Prism.UnityExtensions" Source="Microsoft.Practices.Prism.UnityExtensions.dll" />
+    <AssemblyPart x:Name="Microsoft.Practices.ServiceLocation" Source="Microsoft.Practices.ServiceLocation.dll" />
+    <AssemblyPart x:Name="Microsoft.Practices.Unity.Silverlight" Source="Microsoft.Practices.Unity.Silverlight.dll" />
+    <AssemblyPart x:Name="System.ComponentModel.Composition" Source="System.ComponentModel.Composition.dll" />
+    <AssemblyPart x:Name="System.ComponentModel.Composition.Initialization" Source="System.ComponentModel.Composition.Initialization.dll" />
+    <AssemblyPart x:Name="System.Runtime.Serialization.Json" Source="System.Runtime.Serialization.Json.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls.Data.DataForm.Toolkit" Source="System.Windows.Controls.Data.DataForm.Toolkit.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls.Data.Input" Source="System.Windows.Controls.Data.Input.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls" Source="System.Windows.Controls.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls.Navigation" Source="System.Windows.Controls.Navigation.dll" />
+    <AssemblyPart x:Name="System.Windows.Data" Source="System.Windows.Data.dll" />
+    <AssemblyPart x:Name="System.Windows.Interactivity" Source="System.Windows.Interactivity.dll" />
+    <AssemblyPart x:Name="System.Xml.Linq" Source="System.Xml.Linq.dll" />
+    <AssemblyPart x:Name="System.Xml.Serialization" Source="System.Xml.Serialization.dll" />
+    <AssemblyPart x:Name="System.ServiceModel.Syndication" Source="System.ServiceModel.Syndication.dll" />
+    <AssemblyPart x:Name="FFF.Silverlight.Core" Source="FFF.Silverlight.Core.dll" />
+    <AssemblyPart x:Name="FFF.Silverlight.Entity" Source="FFF.Silverlight.Entity.dll" />
+    <AssemblyPart x:Name="System.ComponentModel.DataAnnotations" Source="System.ComponentModel.DataAnnotations.dll" />
+  </Deployment.Parts>
+</Deployment>

@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DABD1317-EC38-4448-82CF-CB338504BD3E}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FFSilverlight.Web</RootNamespace>
+    <AssemblyName>FFSilverlight.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightApplicationList>{81C5521C-39C3-45CF-BC9B-623C48203B81}|..\FFSilverlight\FFSilverlight.csproj|ClientBin|False,{920D7EFB-372F-40CD-B8B9-638ED51F4636}|..\FFF.Prism.Silverlight\FFF.Prism.Silverlight.csproj|ClientBin|False,{4EE3F343-4915-41BC-9C39-4F68BE99455D}|..\FFF.Family.Silverlight\FFF.Family.Silverlight.csproj|ClientBin|False</SilverlightApplicationList>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Http, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\Microsoft.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Http.Extensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\Microsoft.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Runtime.Serialization.Json, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\Microsoft.Runtime.Serialization.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activation" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientBin\FFF.Family.Silverlight.xap" />
+    <Content Include="ClientBin\FFF.Prism.Silverlight.xap" />
+    <Content Include="ClientBin\FFSilverlight.xap" />
+    <Content Include="Default.aspx" />
+    <Content Include="dlls\Microsoft.Http.dll" />
+    <Content Include="dlls\Microsoft.Http.Extensions.dll" />
+    <Content Include="dlls\Microsoft.Runtime.Serialization.Json.dll" />
+    <Content Include="dlls\Microsoft.ServiceModel.Http.dll" />
+    <Content Include="dlls\Microsoft.ServiceModel.WebHttp.dll" />
+    <Content Include="FFF.Family.SilverlightTestPage.aspx" />
+    <Content Include="FFF.Family.SilverlightTestPage.html" />
+    <Content Include="FFF.Prism.SilverlightTestPage.aspx" />
+    <Content Include="FFF.Prism.SilverlightTestPage.html" />
+    <Content Include="FFSilverlightTestPage.aspx" />
+    <Content Include="FFSilverlightTestPage.html" />
+    <Content Include="Global.asax" />
+    <Content Include="Silverlight.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="WebForm1.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\RestfulConfigurationManager.cs" />
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RestServices\Authentication\LoginAuthenticateService.cs" />
+    <Compile Include="RestServices\Common\BaseRestfulService.cs" />
+    <Compile Include="RestServices\FamilyUserResource.cs" />
+    <Compile Include="WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Library\GIT\WCF_HTTP_Preview_1\Http\prototypes\Microsoft.ServiceModel.WebHttp\Microsoft.ServiceModel.WebHttp.csproj">
+      <Project>{8C5CA420-BDC2-4B92-A20E-4EC1FBEEA27D}</Project>
+      <Name>Microsoft.ServiceModel.WebHttp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Library\GIT\WCF_HTTP_Preview_1\Http\Src\Microsoft.ServiceModel.Http\Microsoft.ServiceModel.Http.csproj">
+      <Project>{7182B333-2A03-4D98-9DDB-0F0D462F6F36}</Project>
+      <Name>Microsoft.ServiceModel.Http</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FFF.Core\FFF.Core.csproj">
+      <Project>{B453FE90-B582-486A-A305-27814D3C9D64}</Project>
+      <Name>FFF.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FFF.Entity\FFF.Entity.csproj">
+      <Project>{6F457C34-0D4F-4161-A85B-B26A934A8549}</Project>
+      <Name>FFF.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FFF.Library\FFF.Library.csproj">
+      <Project>{D1AABAD7-935C-4F8C-85BF-DC88AA526440}</Project>
+      <Name>FFF.Library</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>1107</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

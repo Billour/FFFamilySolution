@@ -1,0 +1,5 @@
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Entity\bin\Debug\FFF.Entity.dll
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Entity\bin\Debug\FFF.Entity.pdb
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Entity\obj\Debug\ResolveAssemblyReference.cache
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Entity\obj\Debug\FFF.Entity.dll
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Entity\obj\Debug\FFF.Entity.pdb

@@ -1,0 +1,38 @@
+﻿<navigation:Page x:Class="FFSilverlight.About" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+    mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480"
+    xmlns:basicvm="clr-namespace:FFSilverlight.ViewModels"
+    xmlns:basicv="clr-namespace:FFSilverlight.View"
+    Title="About" 
+    Style="{StaticResource PageStyle}">
+
+    <Grid x:Name="LayoutRoot">
+        
+        <ScrollViewer x:Name="PageScrollViewer" Style="{StaticResource PageScrollViewerStyle}">
+           
+            <Grid Background="{StaticResource MainBackground}">
+                <Grid MinWidth="300" MaxWidth="800">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                        
+                        <TextBlock x:Name="Sample1" HorizontalAlignment="Left" Width="Auto" Text="MVVM" FontWeight="Bold" Foreground="#FFFFFFFF" FontSize="24" FontFamily="Comic Sans MS" Margin="5"/>
+                        <TextBlock HorizontalAlignment="Left" Width="Auto" Text="QuickStart" FontWeight="Normal" Foreground="#FFFFFFFF" FontSize="24" FontFamily="Comic Sans MS" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <!--<basicv:View1 x:Name="PP"></basicv:View1>-->
+                        <ContentControl x:Name="ConventionRegion"/>
+                        <!--<Button x:Name="ClickMe" Click="ClickMe_Click" Height="40" Width="50">由上傳至下</Button>-->
+                    </StackPanel>
+                </Grid>
+            </Grid>
+
+        </ScrollViewer>
+    </Grid>
+
+</navigation:Page>

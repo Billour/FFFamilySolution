@@ -1,0 +1,658 @@
+From dd10895216c226f536d739b3ac31f607fa90965a Mon Sep 17 00:00:00 2001
+From: wbtsai <wbtsai@msn.com>
+Date: Sun, 19 Dec 2010 16:56:45 +0800
+Subject: [PATCH 2/7] Add CouchDB Function
+ 1.Add Security
+
+---
+ FFFamilySolution/FFF.Core/FFF.Core.csproj          |   62 ++++++++++++++++++++
+ .../DesignTimeResolveAssemblyReferencesInput.cache |  Bin 5693 -> 7375 bytes
+ FFFamilySolution/FFF.CouchDB/FFF.CouchDB.csproj    |   18 ++++++
+ .../DesignTimeResolveAssemblyReferencesInput.cache |  Bin 5699 -> 6053 bytes
+ FFFamilySolution/FFFamilySolution.sln              |   18 ++++++
+ FFFamilySolution/FFFamilySolution.suo              |  Bin 41472 -> 104960 bytes
+ .../FFSilverlight.Web/FFSilverlight.Web.csproj     |   15 +++++-
+ .../FFSilverlight.Web.csproj.user                  |    2 +-
+ FFFamilySolution/FFSilverlight.Web/Web.config      |    6 ++-
+ .../DesignTimeResolveAssemblyReferencesInput.cache |  Bin 7226 -> 7476 bytes
+ 10 files changed, 118 insertions(+), 3 deletions(-)
+
+diff --git a/FFFamilySolution/FFF.Core/FFF.Core.csproj b/FFFamilySolution/FFF.Core/FFF.Core.csproj
+index 0f73cd8..30b49a3 100644
+--- a/FFFamilySolution/FFF.Core/FFF.Core.csproj
++++ b/FFFamilySolution/FFF.Core/FFF.Core.csproj
+@@ -31,8 +31,30 @@
+     <WarningLevel>4</WarningLevel>
+   </PropertyGroup>
+   <ItemGroup>
++    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
++      <SpecificVersion>False</SpecificVersion>
++      <HintPath>dlls\log4net.dll</HintPath>
++    </Reference>
++    <Reference Include="Microsoft.Http, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
++      <SpecificVersion>False</SpecificVersion>
++      <HintPath>dlls\Microsoft.Http.dll</HintPath>
++    </Reference>
++    <Reference Include="Microsoft.Http.Extensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
++      <SpecificVersion>False</SpecificVersion>
++      <HintPath>dlls\Microsoft.Http.Extensions.dll</HintPath>
++    </Reference>
++    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+     <Reference Include="System" />
++    <Reference Include="System.configuration" />
+     <Reference Include="System.Core" />
++    <Reference Include="System.Data.OracleClient" />
++    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
++      <SpecificVersion>False</SpecificVersion>
++      <HintPath>dlls\System.Data.SQLite.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Runtime.Serialization" />
++    <Reference Include="System.ServiceModel.Web" />
++    <Reference Include="System.Web" />
+     <Reference Include="System.Xml.Linq" />
+     <Reference Include="System.Data.DataSetExtensions" />
+     <Reference Include="Microsoft.CSharp" />
+@@ -40,8 +62,48 @@
+     <Reference Include="System.Xml" />
+   </ItemGroup>
+   <ItemGroup>
++    <Compile Include="Attributes\EnumDescriptionAttribute.cs" />
++    <Compile Include="CouchDB\CouchDBDataContext.cs" />
++    <Compile Include="CouchDB\Entity\CouchBaseEntity.cs" />
++    <Compile Include="CouchDB\Entity\CouchDBViewList.cs" />
++    <Compile Include="CouchDB\Entity\DBConfig.cs" />
++    <Compile Include="CouchDB\Entity\DBView.cs" />
++    <Compile Include="CouchDB\EnumBase.cs" />
++    <Compile Include="CouchDB\Extensions\CouchDBExtensions.cs" />
++    <Compile Include="Data\Attributes\ColumnNameAttribute.cs" />
++    <Compile Include="Data\Attributes\DataContextColumnAttribute.cs" />
++    <Compile Include="Data\Attributes\DataContextMapAttribute.cs" />
++    <Compile Include="Data\Attributes\SQLPrefixAttribute.cs" />
++    <Compile Include="Data\DataContext.cs" />
++    <Compile Include="Data\EnumBase.cs" />
++    <Compile Include="Data\Extensions\DataContextExtension.cs" />
++    <Compile Include="Helper\EnumHelperExtensions.cs" />
++    <Compile Include="Helper\HtmlParser\HtmlAttribute.cs" />
++    <Compile Include="Helper\HtmlParser\HtmlDocument.cs" />
++    <Compile Include="Helper\HtmlParser\HtmlElement.cs" />
++    <Compile Include="Helper\HtmlParser\HtmlEncoder.cs" />
++    <Compile Include="Helper\HtmlParser\HtmlNode.cs" />
++    <Compile Include="Helper\HtmlParser\HtmlParser.cs" />
++    <Compile Include="Helper\HtmlParser\HtmlText.cs" />
++    <Compile Include="Helper\MailHelper.cs" />
++    <Compile Include="Helper\RegularExpressionExtension.cs" />
++    <Compile Include="Helper\XMLSerializationExtension.cs" />
++    <Compile Include="Logic\ReflectionLogic.cs" />
+     <Compile Include="Properties\AssemblyInfo.cs" />
+   </ItemGroup>
++  <ItemGroup>
++    <Content Include="dlls\log4net.dll" />
++    <Content Include="dlls\Microsoft.Http.dll" />
++    <Content Include="dlls\Microsoft.Http.Extensions.dll" />
++    <Content Include="dlls\Microsoft.QueryComposition.dll" />
++    <Content Include="dlls\Microsoft.ServiceModel.Http.dll" />
++    <Content Include="dlls\System.Data.SQLite.dll" />
++    <Content Include="Helper\dummy.txt" />
++  </ItemGroup>
++  <ItemGroup>
++    <None Include="Helper\HtmlParser\vssver2.scc" />
++  </ItemGroup>
++  <ItemGroup />
+   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+        Other similar extension points exist, see Microsoft.Common.targets.
+diff --git a/FFFamilySolution/FFF.Core/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache b/FFFamilySolution/FFF.Core/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+index aeffd3822733eb49d25d5fc36389d3c3b2d400bc..f80fa67fd705a49f5ad7223f58d713b094ee9015 100644
+GIT binary patch
+delta 966
+zcma))-A)rh6vta+N7|x>LfT3NiueJDLjh6IaG@2f2C$_fiD?Ym-6<KJ-EC&3m9^;$
+zcsmc^19;=dwFxg^j1ObtrDwLZ6{5yXW-{lT-<)&yKj+Kbx0Mg?Bhk@ND1?%*<<#N8
+zQo?3Tl$p1G!zB`ffl?59tV3f#Xp>sp6JAx~yp*+oI1j{*CZ_*HtQ|<=3hKEcfOWZN
+z8lE`;7wd%kInSwif=a*xIt}!$re{ykCBhrjBAcE~Sg(@{fNyDhGQdl|ki@|cOljg$
+zaf3<{Bpm~){j+((YJ`{Vy5sm*9!N9}p@L2@bri}=hZRgNfNBWQAbb%E%R&>K6!D<Y
+z?|Nm_#|Sef0r<CS7lHV1)usS`slLaOJ6-)VYpx``#;G8g4O-zQ_cO~lTfR@-au>n{
+zZdwwA61ayS(QRFze{@NWM{VOW)OZCoo+mBOt<wEEH@oj}1!5H)JDc-(Tg9v3lG>#n
+z#nQ%f7YNkWS!clIX&@cAo<Jvz<QOGxd$4999z0fiu>SH`*VNZo#h3$D=v))qbyre{
+zU>E>uGWw?1<8@$M%_NQu$1bS^uZ~rA@I|C!&4X1nvT&uUuYCS7c*;mFfZ6$m5S+rW
+z(4smQ-zzS`v46eJSa<+V2CT?2JOUp54MkzochNFzsb<b}ZEBm6+!KO073Qx~MnntU
+zREP28>07{zHlM2bzC^#@Lbuh=_`}o+IL|b<&DR>;G9A)Fcfhr(=Tf~L9tq!7?}qon
+K3!g?-`+fnA#329x
+
+delta 334
+zcmX?axmRbyYECW=1_lN;aUhXCnO`t?@<$#~RtX?49?Yxc<7Jfu@{)kOC@$yxqEx+<
+zoE$c($qD?GtkN)v$qNKnSwZ45leq<xSY?6Yi69M=6@)oh<$%02D34`xxA1=!ae1H+
+z3<$CTS&Tr;rZ9P-L_)nHkjdg!nv=r_au_QRbD}8c1d4!wAQzAT>19&}5)#$UiFqlR
+zDTyVij>W~Pxk)*dZkai$#kFiIKv|(`kIcN1fW(pvx1#)9&yv*KS~gXnxKwpWVo`c(
+ziCa-(ZfbdcQMOCw<OWGjMzzUZlI{}fKoz{zL5bxcll*`xYS}b^Lbj6+a2QXPkrH9l
+QoNOqSz$m|Yl9VkI0K2wFumAu6
+
+diff --git a/FFFamilySolution/FFF.CouchDB/FFF.CouchDB.csproj b/FFFamilySolution/FFF.CouchDB/FFF.CouchDB.csproj
+index 46f1842..9f2bddb 100644
+--- a/FFFamilySolution/FFF.CouchDB/FFF.CouchDB.csproj
++++ b/FFFamilySolution/FFF.CouchDB/FFF.CouchDB.csproj
+@@ -31,6 +31,14 @@
+     <WarningLevel>4</WarningLevel>
+   </PropertyGroup>
+   <ItemGroup>
++    <Reference Include="Microsoft.Http, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
++      <SpecificVersion>False</SpecificVersion>
++      <HintPath>dlls\Microsoft.Http.dll</HintPath>
++    </Reference>
++    <Reference Include="Microsoft.Http.Extensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
++      <SpecificVersion>False</SpecificVersion>
++      <HintPath>dlls\Microsoft.Http.Extensions.dll</HintPath>
++    </Reference>
+     <Reference Include="System" />
+     <Reference Include="System.Core" />
+     <Reference Include="System.Xml.Linq" />
+@@ -40,8 +48,18 @@
+     <Reference Include="System.Xml" />
+   </ItemGroup>
+   <ItemGroup>
++    <Compile Include="CouchDBContext.cs" />
++    <Compile Include="EnumBase.cs" />
++    <Compile Include="Extensions\CouchDBExtensions.cs" />
+     <Compile Include="Properties\AssemblyInfo.cs" />
+   </ItemGroup>
++  <ItemGroup>
++    <Content Include="dlls\Microsoft.Http.dll" />
++    <Content Include="dlls\Microsoft.Http.Extensions.dll" />
++  </ItemGroup>
++  <ItemGroup>
++    <Folder Include="NewFolder1\" />
++  </ItemGroup>
+   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+        Other similar extension points exist, see Microsoft.Common.targets.
+diff --git a/FFFamilySolution/FFF.CouchDB/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache b/FFFamilySolution/FFF.CouchDB/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+index 0ba7aea1f54dcc649f2e2cf852b7c3aa776ff696..f7b1ccda54b4b72b9687287a0fc748fce2c6f60f 100644
+GIT binary patch
+delta 448
+zcmX@Cvs8b>I!-Pg1_lN;aUkJ4`2dHRY)Vc}ag1+fa#4P9ep-p1M@dP69#D);0;nPa
+zq(TFm3fGE~)V$)%{JdhYVo9Ll^vUyhf+urxiLy!&G+Y{HxC#-5%S=|}N@0}+YDofG
+z5yj=4Uz7^ARc`V-u1Z#UxP(h$Ng`N6Ve$p;BvwVBL?Tc}94p8_N}Ff#B(h2?0|j9~
+zkPXOU1Y$N7AQ1#q8YCyk4ii%aGFaS7b8;9tfGk!Z=2V{CCM0LB4rEGHJ16F)WTqsR
+zq&gNCr{*T*RJvv6q!!n*X#iz~sy#CEN&*r~GTe&tb3IE^b8Fc&C*Ky5XVjYfTgY8P
+w8>oi2Iw-Lmq{lBYH?@{c2PotK3hv1hghg0&fjqE#CjS=ZVpQJDCSuD30Pvi7761SM
+
+delta 268
+zcmZ3ge^_V3I!-PQ1_lN;aUhXCi7$Ba9xhQ<2_PpP#JR=I%PI-vBu(Or;&RR}O4Uor
+z$zhY49Kch_Dh(Cqb4e^o1dGc6MPh*}Cr{vIVU-1P5-0J+v4V8SZT`cX$SN%l6oUal
+zHXw@;h}jf?M9?I@pvk9%xkMC!92U3IoE%1wvsi(cQ-1ObVL3+S$?PJsk}5y}p=yuJ
+zypn*#k_@+^{9MnH)ZAJ&)ycLZ@{DSeV@2F0)PZVvtAi5D-7<4h{StFiYuPk_LJpG;
+baF|X0BqGA93FLt-j1}c#l;4~oYRd!w7rHuN
+
+diff --git a/FFFamilySolution/FFFamilySolution.sln b/FFFamilySolution/FFFamilySolution.sln
+index 6940c6f..282ed48 100644
+--- a/FFFamilySolution/FFFamilySolution.sln
++++ b/FFFamilySolution/FFFamilySolution.sln
+@@ -14,6 +14,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFF.CouchDB", "FFF.CouchDB\
+ EndProject
+ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFF.Core", "FFF.Core\FFF.Core.csproj", "{B453FE90-B582-486A-A305-27814D3C9D64}"
+ EndProject
++Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFF.Entity", "FFF.Entity\FFF.Entity.csproj", "{6F457C34-0D4F-4161-A85B-B26A934A8549}"
++EndProject
++Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFF.Silverlight.Entity", "FFF.Silverlight.Entity\FFF.Silverlight.Entity.csproj", "{01BFB4C3-8F53-4C13-9BE7-DF2D3B60C192}"
++EndProject
++Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFF.Library", "FFF.Library\FFF.Library.csproj", "{D1AABAD7-935C-4F8C-85BF-DC88AA526440}"
++EndProject
+ Global
+ 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+ 		Debug|Any CPU = Debug|Any CPU
+@@ -36,6 +42,18 @@ Global
+ 		{B453FE90-B582-486A-A305-27814D3C9D64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+ 		{B453FE90-B582-486A-A305-27814D3C9D64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+ 		{B453FE90-B582-486A-A305-27814D3C9D64}.Release|Any CPU.Build.0 = Release|Any CPU
++		{6F457C34-0D4F-4161-A85B-B26A934A8549}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
++		{6F457C34-0D4F-4161-A85B-B26A934A8549}.Debug|Any CPU.Build.0 = Debug|Any CPU
++		{6F457C34-0D4F-4161-A85B-B26A934A8549}.Release|Any CPU.ActiveCfg = Release|Any CPU
++		{6F457C34-0D4F-4161-A85B-B26A934A8549}.Release|Any CPU.Build.0 = Release|Any CPU
++		{01BFB4C3-8F53-4C13-9BE7-DF2D3B60C192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
++		{01BFB4C3-8F53-4C13-9BE7-DF2D3B60C192}.Debug|Any CPU.Build.0 = Debug|Any CPU
++		{01BFB4C3-8F53-4C13-9BE7-DF2D3B60C192}.Release|Any CPU.ActiveCfg = Release|Any CPU
++		{01BFB4C3-8F53-4C13-9BE7-DF2D3B60C192}.Release|Any CPU.Build.0 = Release|Any CPU
++		{D1AABAD7-935C-4F8C-85BF-DC88AA526440}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
++		{D1AABAD7-935C-4F8C-85BF-DC88AA526440}.Debug|Any CPU.Build.0 = Debug|Any CPU
++		{D1AABAD7-935C-4F8C-85BF-DC88AA526440}.Release|Any CPU.ActiveCfg = Release|Any CPU
++		{D1AABAD7-935C-4F8C-85BF-DC88AA526440}.Release|Any CPU.Build.0 = Release|Any CPU
+ 	EndGlobalSection
+ 	GlobalSection(SolutionProperties) = preSolution
+ 		HideSolutionNode = FALSE
+diff --git a/FFFamilySolution/FFFamilySolution.suo b/FFFamilySolution/FFFamilySolution.suo
+index f3f0607503a1cf95491278f434d6d9e67f61ff01..ee98123029844ea41bfa02ba0018037165c1b06b 100644
+GIT binary patch
+literal 104960
+zcmeHQ33yw@wZ6_Cc1R#>1p_H-BqUpw?IbK(?8M+~b~eD^$hPb#$d<9>kU-MMUZ8BH
+zErn8A3KT-h+R{?CLg|A->0>FcEp6e^*HU<|?JEV^(iPtS-?`(v=w9hcwrtB}^c~IJ
+z=bV`{XU?2CGxOpLd;an(_wWDTiX|McOjbVlaHcZNaD5VvE9Cheio)|LfDb<W@I!g|
+zTpZwZM<|mV_!sb;iZa^|z_Mg{&j3sZ>;jkx*a@&RU{}CyfR6!o2Y>~XJpp?GW&vgc
+z_6F<&m;=}sus>iu-~hmZfP(-B11bS)0fzu0fWrWD0Urk(4mbjEB;Y8((STzB^8g-z
+z7jP`V2k--`0M&p1pau{G)B@@N^?><+1%QQs;{eA4P5_(;2m!)?MnDwM09XU~1Yj|s
+z32+kNWI!`u31BH;8DKeJ1)v4c3RnqP1y~JO2RH?=5pXKtG(a2Rbif&a1mF%p4Dc}E
+zQ9u_U4(JB-0L}z#0c-$d0OtUD0quYkpdWA+U;vN?oDCQRBmr9in*f^uoq$IGENj-)
+zn{oVafb#$?_)-dAuLR|NhzHa+aKmNTN0~ZQ-&wY~LjT+Qww(Iq=PD-iAtHsa94V$i
+zVG~mC#!-WcwYcZze;;L11*;l)j<K6}_zZcMVI@i+jht>qiKIdQD*VTRlf2G+%@yV%
+zebxciAGhgO;91r&hLuRSAGyFZ(;5zO<VB~-3F4Vt{|6y`evka<Hhs$Nsr*AAKM+_Z
+zQvj3&lmV>&#8K9N`5a}yivXT84@rBj`p@U~*PiDwWe4l2tPkXW`Rz|@$HmtFYw>=u
+z^*@4lW&NitSOgeO{ih6}e4`9F74TUA>6G=Kb$A`%CO`+^y8vtbUyo~)6RiJ~1+3Ss
+z|9t?v`cE0b`cIidSs?2_<;J-H$`Z;2$~Ia58-8`qrJGJa_vE|hK5|&#okJ<+3JQOW
+zkVA$M$h^px4;eG;LdHB}bvhdF80=X-5KqVZGO<h|)wev>d1kC9KCg0hd?1bU<NQ9a
+z`kPl78BAsd2ja)|#RoG3vE;nU<%1o`MCZxz%_~!9#`})z@Ktx$bk}zK{arP_Saoc=
+znwU&+%HWbj=Rhi*>dtsqC(?tlWNT)yE0OZ5DD=b!h7MMyQpq)mzOK~SX>T-^iLFfZ
+zr@hM)eSNWxWL!OI*p!L)r4t>AWFoWKyPTM&aiueUOtX3rAK-hfnbbg>bndL`Q=?7(
+zR8rnIazq=*lq72z5=kYK@lKW=lbpgVQU%XUikm(7$FQ@Aiu#v@Sk%jSiSM($jzUXl
+zL#=OuL~ciGo<eOKM0=3HQ6KI!s=pZOUjlbF+g!<hM|^#EEfqUVD^!__2ZkLeyUzne
+zR60bf+JiQQ7*_&!VjV{dQwgnV6EveBG^;jfGf`aa0Hr<nu?<>-H!^5_)~iqFN2?O;
+z56f{DfP9?)4N=~+wFj-~hk-*JIGl-AF$JutljLfHk3=todKuGZaFhNnc<2_b{j;V|
+z{ex|9|4`ZIN}amuqzZnD?WNoFsYA>5-<m#4st+vzxoHr2kxvg``b?MKbDKUna;Zjt
+z0x3`fO9Q$=b0um6HK9S2K@w-JxHbrUSPv?pZTp~o`@lJ?!D(&kyBWl36;tZBR{;v;
+z!QtUReocbQyMc|4i98=a7zsSbLmrXCI+15A*EsTQxItqj(`SZr&Gex>Clz__=ete)
+zbqR7Jsn&OLdknlxo~KqW`X=l(ineNjs=J;Gsp&(nF$_+xgKVuwuQY_Z5mk=@h^ukt
+z!Tkn2$0I+UibCcF)i*<UuK{;!ppCUEb9eq%=$I?NyZHW}Z+~IdSJ&*`ti1T}J8LgJ
+z^r42k=Kr|!`u8_cWkzUK>bhq?`N5M1HQ#nq*FB#<=<RwwxuTN&(c&?3mOq<Or#evU
+zsdYLB$e$tE>sJ0y50+oFroRLn*^5-!4_%|l!W6VwCn-D+@{fIT%2c=Mv#+*NL%^E8
+zefwj?M0-(-0-F3~A-PTe06Z(@KiiuOXdXbFq{P)*YRP?Z)YS|)hI$B}G`EQJk^ej4
+zdj}SfzB&I>`2HaBTzuI`>2jpWKB?4#?8?9g`q?KW?F=}~8`!tnf3A2eiZq<kmwoXl
+za)$NNE_jhXdmtipcj+7Hw`y%7pSwYI4|0Y2lce4*b=sr~=YN*fS}Gw3%TUKQKmt)$
+zvzGB{)q*9SbNW9N^i%g^AKY#J(@sO3mmvb4qXi_bw)=6^G%FV3Ij4WvKU6#4-gv-m
+z`o{d1T+VvX4_sLDSsR2TCcoznw7+~DkIX3`{e$srpVn<%h5E!)V`^L2H6-&zt+V5J
+zGd{@wA>J#7{>9+5E;a2w(3}J|jld?UUZF)OUl?xsVNl))ZJYc@jgz`(vz8yZ>Yc=^
+z82Mj`m%Frvdl}NC{zjdI&|@h1D6Y`9nJcjTW!-n1|FoYxUn#yC2CXU3--~=0K<t+9
+zBu)nwQT~VE<s-EZNIRpnKenRh#X7(~7;`2c2eAGXO8=oqTed$ahMoTQ%p))U>?{5y
+z->EqGC%rp8|IH!VTAn)pd-X3gJbGit!o`&f&X?Ec%zEtSb-!O6z2JrCs^>zFG3Oxr
+zn5&`pQ1fA5!LPo?{<B^0dF=~qy=dQ(C1C%)`jE|EcuC_*wx?cbK@Dit8<BTRhmwr>
+zcqSzDYE`1JC1V?U9PDEO6*JI2?7(lZ@3$yAzim;|%J$Y&a*+0pw#LTBSZ^Y^dFa4!
+zr!|q>7#~O`de&#!Rwv?Tr`r~%dgI<rv0hc#nzpcSFqu4FS<#ss@btxc<LUlbXMBF^
+zW|)$Cz0v>`N%dt0Qpxm!SUMf=?MQAu&fx*?(%8mCk7`3BxhI-1T@4Ofsg__;)%G@_
+z22lQPL~iBld-7{+f7qXtJjiSL0-JueSqy7YR!K-*A%$Y7|8ca5ZhPMxGZOWm_5`=}
+zpY6rY8UnKY5%PW|C?7<QWQN8g22{Ru)&Z#huqmev%We9`_HPYn?MAPFwi)UieQNG|
+zz{@pg{UaFL3aK$ZZySy-qW*W{O9PtGtpH99_4jA7X#M(3rhopi$EG{i$9rRGZ|{&L
+zwKLUw?AeLF?oG#5`Fz1+$=k>F8_c<+rqRTT?osisiFdRCyq&4O?nDniCF=~2m4+g}
+z+qNW@fStJ~yDAQk&XbD8Cxoh<Nw>9THYelh5zhR@#UdpnR;VL2n8`w^G$L#1@K9|S
+z7)T8Wv6+Ri7y8cGTB|Sn{X+g^_xkJ5mPJr6YfvkB<Uv2b9&t5}0=ODM>%(4u1Xsg2
+z3gWqHoCQ#WtI!fw<0`+g6|Ik(R6}6pbJaISD%BQ97utcT@y9V96oS0jjP^PL3A_qe
+zbpu28cxe9(t6Hcr7fu*)eDvOTp|}K8T%w>L4C(1d-uf}-Pr1qRs8dTMpys?s&3#ce
+z5j<V3-mgJ<1k`t{@s8UPVM}LkBNFWgb8Cj`zd(!3Na3~sUm_=r+!wtV_a8ndj3hq8
+z<%A&0pPUdyO$(rGS^I+E2wL9)$Uoj8Cxmd1cWdz+?R0EiSx19-Du^$*<pfb8Bbn+*
+zl*mZpGu#phBS&kHw~eS@^=h8e;z>!!65$9`2uC42;lp(guGiwKANN=;l%cek1_~^Z
+zkxX?YN@OJQ8E%OLQ5GzdT2)2{kmo++aX@Xg0?2uC4@;yD&#?UpqfA&z^(YV4AzlyQ
+ztk60#a;c6)iHu|}47WtsI}RiN$t6OM;CKRS4eLk*cX>o@q5-AmL1{H=ax09I@u^SL
+z<4R#AGLor|M2QRsAG?tfG?uPI_K1uawI9xyirqH_LhGUT(a)d<eZ36)3^?j)_A}^)
+z4%V$&Fr=S>^@`IwUTAH?ddd;K3c#jONbTY&j~!3inBFxXv_5dbH#aQ4b?Oo4FIjj~
+z*NH!REOu7+YbRZ<47|K;Vb_^_j=}nzxC+0pEe)w<yT(G>PW$?X&zy8|lf3@D2Oh6z
+zy?R#jjc>i~S+MTAbn{ZfPaod?QkDbF6k_sDg=P!U9Z=HVMe)A)K%&zdO{g9zv4PF&
+zs!lsid$2V#km&1~SJ|8HOu;hKp}QFcTzeVS*2Zc&Yl8mz>OkCASAY6E`Eer_i(~2a
+z8M?=eY+9$&o-ti>jhYcj_4daG;sZ07T5IB*_^$AUS{+Lc#+Szu18IzAPM&dXt~}E6
+zs^KhnL&1|tes7(>q#1Vlj6df>%1FaRD!S87C(q90kU58$Rp+QFJR6Ti1hkat>S#ET
+zCQN?sqgZHD{t0v6N0M@tPtS~Rp1P3&rDF1dHnMg|%1xs~@zoXQ*7+kfHC6tIr@B5;
+z?FrOG8a?4ieb^JMs*VKes(jVqI{(%!jg75M&8r()nwu6aUJ1*&;mjLpUEZ?nq%G1E
+zw5)m6%BE#YX<iR4X=*-Y=%7`<V|cx7NvLV*^3b9N@7mCk=9zSHp2EMJ$kVXDQ*$cT
+z)fnr9%Vw5%-GgLCQeE-o1F4OPE`z+C0$G)wrb=9l;7p#ZOr5&(47;?Nq-dRMlZ#DR
+z-~auJx)a_ZRy)ygWhN1v$)TJ*c*KKg9M_x^ji(bmXziBA`r_VGQ>or1F|==+rg5xg
+z@78{ZbQ<xz%LWqX<H`kq3jr4aE(Tlz_$1&`z-55T0iOa~0k{%CAFrzc*8phCCVWOa
+z{v6`#0Jj5f1l$1l0)WqaQHyUw{AIw++W9SrZ`F>!iuf+T9e{0sI|17PUjy(PcO$+B
+za4+CK!2N))1HJ)x5WvB!Zvpu1w-G-Cco^^q;8DP1fbRev2Rs3I9`GdKdjP)k6ym1=
+z-`CEcMf?Np_=kx9Lpy!}@hgCr06zk}4ERsLj{!dc{1lLYbo?3Op96jYconb#*ZvFf
+zZvejp{5OE<{u=Qc+VPu+S;+qb_+P+p0et57i2qMJejD*0wPW6U566Gf&i{h=eZXI}
+z^S>khhj#og#@aEZxAd-_#_@pJI%_N+Nc2KOS{dt@whQj;qu*&=pE_GT%ftt!?P|UU
+zPvA~|5f=2d({{tXY))L(-3^=ewB56Au8j4Fd+BL=IDYk%J;>yQnQ8^ti$}9~siI=W
+z&foj<ktfXLNYKo^d5I*Qu**L9U#bn7g=1-h1G#I>uG-(xU0qibjCEB91M%vbsZ9F-
+zt-{LjxFzwfM9eEH8WEh*-s|`CuL^%vJgTai(VkMtUn>tzncAM&+#jFO-XH7gf&z;7
+z_^L8Z4Re;XdYk%?&wa6^_T`m$I!%&h@K1z4(lBcivae75U$BbPSHTU+bXBIew;MkX
+zpZtAsYmJ58#?(M>dIZ$usVu`vyN^>oN&Yk=M|>Eju;_Qz-d!}9=wgviYL887@0iry
+zIjOyCQhR(-d-tUFo=NTNC$%RgwQrczekR}4!i?$DC&_TfijBXS_R^kLJ*M3J?CyvE
+zb}AWZwgs={sYG9f4dA5qO_SO;L*7o)%Rzn=c#;1;p}lL={$(G8vjGgsGzvKw7~u}V
+zWS}suJ%J(P^wjn=`T#T9G3d;h6Vusf%$T_!9$>Z-cIOGZ5HkTe19R9A_;Lfr;H`dC
+zZ59i&7yVs&x{2h@fh9xu+c%EP7`KX%@X`0eDkA&Ax_1+O5jxS|7Ap3(q4cd*l;K)*
+zI2IAYFARvPHXB;cI5tF!P9tn+JQ5Z*juu66UWXsw;kXhlp0r=Pwdh=4A#<|0nG20b
+zmtLv?{L|jVF)i9-h?^fj+G5*>yrQzbW8i;Su>Z}WD1~h|t3`%%+@w#xjwQe^hS74C
+zp&o)ojDH`7*B5J_$mM@TpESRol<g7y57=B)0w7yIw0+2O@p_zJtzFBPewF22>uE9m
+zKcB}(s5>!i7#{m@DvaBz-#xvt^X+X{SN!hA8}6Kxn!;QgavNdRG4NVJ!5#rhf>zkr
+zlJH}pHw*pCdN8KRxe80bMf5bI&k4OvyeMUQ3?-G%ymQ#`j~sFMU!VVS=K4R~|G@=R
+zU<6wFfA;&F1wqd_j+u7BhlbWShD%&o-!_#Z|J?|}6Fh?ly!pGM^YLG`Aja{Z{C_a+
+zvQD`zz%Sw1o3t<HOFy7J=M+i*AIcQB>3;>!-l}~tU-~sp32WDjsecdP-EX-}KbSxL
+zibL?skpQ>!KZ9qP2MnndZy$BuF~2<GLaGZon~Nj$iQIpmC^i3ziWNnJ+J*)|IxEZO
+ze8uVS9DU&xx4v=eZ8Muby<79E1yeD6Tf4RP3qN|=_c=>YgsU87K?o0UWPjwehLISN
+z8A*JK*Qj<v-h?1m>3v5z9>K^6dr0)LV8_$>%L|~xa0J<hc7Q*Qt=Vf-a(<_El%-7_
+zhcR-8n{k(HUJ$c8`k=Lll+r^yvC)wyMiwW|<V-?uVmm1L@rt3e!!WBIXz}x%g2^n4
+z!mW`dY95dLyx3f=v-3TnzxRU*t`~8|iUnuCaouwjE#nwRuj)(6e3#fFw<FXloH-Xa
+z)i4$R-FQEVAA7q|=;vYhXf47@CM(gm5_8BFK+9=@zy506Z9&|G`-`=?P3)*GfLy6n
+z^?7+D^vMrDL>~}5!MyB6%zl|U(1Jm&sRPf@Gag-CEl^225XUKX=1QA^7BNfOUhksE
+z8)=cj?)&V2+J!~o=B8HMC{<Hqk8zvU>k&1FGKfC9ZOD1fmf<Y54$!lC$WvJGCvj~a
+z16(<4mp<<TL(bdd>;YZ3)v-HyjImp+@|;oc)^QsPiDSpdA=HU}<X#UT0ifl8C41T!
+z<eeRU#?o#;?PNXX+<o?Ix^R594eqPPA?_j6A<3!MydDe5?j~PlZ&Bw8Vk+jm%NdKT
+zg=d2{&fj5glTw2mC1+H%sdKD4aW9E`D^+RIk0X0Y<UE7Ln<b4xNRz8LQF2oPP-dAi
+z9c?LU$G_QqaBJyD$ADX9t<NsurZK=KJCCyQS~&)I*_EfU-stk(Sf<eijOjvxt^>w}
+ztq;NeOgCTv&<9BzS1K)BFI(m%;Cl0F7Su?r^TC{IS=-ROFg~#v^@g>l7qw?8Vz#A1
+zgQ)-o1O`$>oqGIJlr~XhPsu=8P+~5d7DzeHh)<xTs8fj9YYA1dCa_|jK7ZS({MMBr
+z)neA16Gdl~1x3B6VeBsp>uiT({pu<UYRp_|)Wq2S+SfPshQ`0-$W0m7%Mj~xP(nLV
+znktymY+25=h@x1Ble(3?o@A8ZoKG$LuCjfg`H;ty7giZ>EwKow;&Y@fsp?QmAxk#m
+z{T>%GrEs1dfAre(Y^>mt9Q*d0Wl8P9jyt7ZQr<F?qxM#LDs>dxQuUOHP;zudGRq@b
+zwpMD(S1Y4sE^W}(tdy<8{c>wH%o;Q;ljc$s_pOwEH1tsz+by}_UZ=I@*u>Q+=49oP
+zwZ%4TBG#OlI4v?q1I)F@niE#t1uvL-tP@=uqc1{XImAAGwsvRDx59a7>~$Y2ZwRf9
+z-nY4O$Xa{W;rViFbIg6@>^4W-H&RMnP>0qC$40Gl*zSY7C&xxhX%TFMrph{ObbS!x
+z*w*X9vMa|#<L~=^{nal$SFseORVpiQvAF4Dq5tvhJ5R=dWpQJn)Bx?rLUBV~g-4Eb
+z`iDk8t9T2}Em>opbmTPzyD>>|n`55)<Iv9b=~ObJrpeFSeS3<$X^Cl7T#Rd@S%zkQ
+zlPySG_1V?O4_1#dR&sSrv;Tw{SG#9)jA<bkl54nQGsUbhR_OT5ic!vAvHDfvBi!Lp
+z#<Kyo7_L#u)oD2PF3MN--8+WLSkRMy-Sd%emz}x8Xq7Uzx#kv%Es<=EC;?6x<vbSh
+ziq^GkTa*`GB^+1en7Dm?v$qzFc1z@z277GRl?@+RZ9R6DE%Fe(<;GfX8&1uj6}Jz2
+z968a~S*G-{1#_}UvfS2}4PAD!B7(lfdPwR4RbJTFwQ?;v>A~T|k%MJZa^|*3r%N7j
+zBsEizv>y*P^kSq<Hit^hV&c_9&Roq`XQdW`N7a#o@!g8kmSIPc)L2M`q^Ml=D)v2d
+z(P*!gSt&19nQLt=-H!r&l%(-NDDL8Ax~w7O8P<|=<rUd_$@V#$SL72`ip#t8qHW7q
+z`c~>DMjzRY6?Y=`dpK9tSh`+q-E=Sfh(!;{Sl+q~oAzvB$F{Dy_68<4(vBU$mrHGD
+zWKT!#pr_ByH`}gj=e+-F0DHrZhTYQ*KDxd7-dAp%_e>eut2ttt&t7fpgW_>D%)meW
+zq@?#0Xa3}}RMY!?bU0`+_(-40CT)VotM;}jIeVj&Ga%%+h~O<FPHn2~Ozv{PJzeN2
+zr(d=1fTY{5M?>!x_!esiUNmZDZ?^fjp<ile5vJ@frB8hErA&M~Q6Ib1($~v)G%Wsw
+z^W;(uQytIdQ7dWgKE(A=xtn7Pa;qD4UaYPz=Edswb?nM(l&6%l$jlrnbzRmMyP3%H
+zK5G}fUE}Ig+0W`ZJsKl`h4X9ntS24g@ma$-=Zhtx;~5*Z8YWAfv(mC>i*ZITXHCRZ
+z9|WB%$Rk{<xEGv~{hm%oDQD`Mxx0{7maDzUwpYh>^t4Sgu3~Oi5}JXo(dbx3$AA;c
+zuRUd}Aa||Q^KSHXCOeIU^N_^4A6&3RNL8_yq>ka}=}fX7JJo37RN8gO*Bkh|O<jM9
+zdT_s?F3J@tup=XMqtdR8ZeF8F^q8-yC{^FZX^u+1d7aZXY~AIW7jO9TIdi^nw`cLC
+zr%!`4a9)^)J4Kc**W#*HAbDEY(MLB$5RXt=-Z1xe$&rFLE-Go>rcw8@*C+F$#<0yb
+z=lS@+L@f%mqDGEu`^*)~E`I#gOSiXloha^S{~Py<<bDBGTa<PE8LQ8wbzcDMegIDU
+zS4vE*`&t^WZ!1~-H|r|7TMP4DIh&fcJ<dWFZO8v!wEmh8zPZb@3!XXdQ*-_@^?p0K
+zKwm`N!o~%&%wDACbG8p+U5nAPjF>SH{dk?*^}Ev3i+YK?ueYJ2*BjL_5=)R7@nO3f
+z9@;lq$L>@xSgBeSbNOcL;q>1kj?~k+$`I$+ay1BjM@{oPJ1Mj0VtHrfxr*p~AAaXX
+zL*b~u+F$Ewh*Z~k0)arCr>+XCwMW9$SOVD>2uG_M)P>shJxtZ@7_nHp`HHtQ-9M1p
+zu%&B$TTdd>o|YS<c6WD+jZx)+;ZEA{iL<fCV^_R8HkizKW9j})_}-Q+=Z1oj+CU&w
+z=kYZJLY_clB<QKD3x+(tV4$k5+E)_@)&{nIM-meb)KoV%)cZW)nz|}afDeZ7kf*A)
+z&L4<YN9v=&0EubzMp6TDE+MZT6oYy<HlxHRI#Yw4>$^H++!f2jut{Ymz9~}x{!flQ
+z{#bVz`+f*AI<RWCI4^*PrzH*JilM+%+NPo4rN&ToBwFon@YL7UhQaF9Ax}NFA@KO?
+zf_`71p)MMV__sbL>2SS+fzHEVC}X7<UWI7u#pa~_a&uCk-vDF-bu|%>zY5hgP*q#&
+zsc(n|J(0SqnotdJuMgI3eMF)^c2z-RrLGRKTWbM4^o&G)T=9@mD4`f?YODQKk=kl(
+zW#NO2sc)$Fg#8VEPr%m@@`r-ah`%wob)41cu8xh^{~?J*$O|Zq=VfV(J}Xg-w#72o
+z!=hs_6Hm7p#A+wnmEOLgdj-(*{qaMOAc9+c7emNU9S{1$(P&k`=LrUD!GNJ?)KeGo
+z`8>5%(dtlLbtD)FhGlbyW-1!iT0Hd_IahFd%|_4E-WA@~eN&dg7$P6<8|-BxR{--o
+zJ08&9l!^CoLI1Q=H=t%{R|+6SXP?GEO>Lw);PFKRjh=u%==X%`YQmmyRWO7-&2Sv3
+z7wpp@v;*o(;;=a8(OL$n52|Y6U^+ff0P+tFmBSbzAM5H(^tGw~1)@HrSp>%i>I11{
+zAvNGNne#q>xG@~Su1<B0HQ3rI;;)7p)lln+HbU%#gFYxCRf27d%8-GDvM(3MPR8DY
+z##+Uf&etV*V^umu2&E?^&f`m0EucCN$)cz)9FEjA)_X$!XuSu0HNPj^;Dc`77!3xa
+zzEGqgT(fmcOFS8e+-^?woa^odxqF!Gj6#Bm&Zs<Sm3OpHdo!CdQ1a@+)pb?)2_?_(
+zkNVN=to3<(2#s~MHMRB8D!tn|zOo<a$Ll-TRp>N!72;h%Pbazxv6@(?+Ev&x)NL+P
+z{410S=?0fLaY7k1W-HN&(w~;bR~hfCR9L2AbJ_Q0G@%Xg<LGxdENZQxzfpiNlO)Pm
+zkh)HuDn~!ji(}4Th)yVO9U@RW5OkAH84kcfA0Rr;`o%?Ax+GCD7Ub?NPZ3uFux^AB
+z9ctdjj-xfjs0eEe2rvafXYJ6n1D}|WV{Rli-ioy-bH@-}+JPWfHZWKN{|T<Tb{NT>
+zICiSZmQC<L+(a|`*q5vED)(O4i{(00UB}Qip|wPX8&-@I@mTOLc~*wqa6oVG=!CI^
+zNy=m_XqIP;>B&yIqh)G$A`QkMD4cA##D<3)9GyTWDg$}yVRpH4W{}FudYv63tIBY!
+zS^4Rta?B8&;N}-WrT(8?;*?}+iI=$@O{Y;DWmC$zeVn%)ErGFfODP={%+3<oySJ^m
+z<>8~Rn6u&apR9W1#SdQV?xz@Yc6AfkWBLDVN&R>1efT)rTK7t^+m`N=H~j0ZU*47u
+z-uTbI9TKd+{UB$;+To!g{Hp2YLNEO6oyW4T*uP`%Q6~M_^gX|fKA+3rDUyL78fOs_
+zdN9wBzTcb+z<B_=dT+^i?Nsi+csR~kboNh~uRe#<hqX)j(yuqansvtg7vaD%#5P$E
+z*j$(iCH?{JdcO4QY~D9sDrW!3U6B6mF4Om8_pV&waO}Tn^aRWGth~27(*L16QGFe$
+z72N_Tr7)l;m6+LK^{FzSORr^K)n^|F?<z$(4_I<eH)GCt=Q@lsuy01N3y<QWaiu<D
+zlD(RuJ4{+pKg527T;+y!hI<ooC$(PnybHT=N*^rq^(A<UGr%hGq&S*~WBT~fM~h#o
+zMBJtD>Pmo^zj+jJpJgDb0>^*tSaHJB(_h~6npWkBWw%cH3UBke3@lMMfwjL>a)-G=
+zs_5@+-f352b`EGQjrX#>Ec9YmrZ{G{N||`ou+x8~Vq{hqtif)T+y{Jao^?LNS~YXQ
+ze^uaLpK?XT=+s$RD|5{yNGl(^_wbwdo9U1K^|D_*cfq+`E&HROtqpn`_9)c%DlZ-W
+zPHp!ZjRQnXxk5Q3W@%h_%@emxZ@l*6ZQtInw(Y3?#jHiS@%Liab{|^FD!^Q<BAkK@
+z-Hh*XM`<yKG55MHa+Mn6-V{RCy*p{s>$kmi&Z;jwIDdWO?-&2bhzsk_l`3xAOJ4rQ
+zRcNzk2GZZuEH&+(5ftsyb;thS|G)dMI;P>JDercCXR4i6<b^bJ;};)8&1DW>HLCQR
+zDdm~9g?jVAGyZv0V%rlP|Jr!N1($`lQ+Ky=5cdU^`^{ckQvA(&YNN)L+_jSHF$f;z
+znOqxHl+&H}Zh!CKhg&`#ye|0pZyw&T+^(GDzUqQD&c%`|b7s_ejiNQWC9g(tK}qR1
+zmzVAtExpSHz3)7D-nPrXy8F_F2e1FjszX-ZWz?r+*$Lf2&oQ~4#dw=PASpAJyr6Q$
+z+rPf^?%u%p-?-o(tD-Y&yzDzm>SW9s#U4mVt6hB-&QKKEAFel)>K960e)c+}kv`#v
+zFKVN4w%zVeAA0YjtCt@1<8MFyVDR`ayu}eHNvVuW*Z!D2_1$sev^!Q^`9SipbDr~T
+z`&8t?UsT%FJY8QSPY!qg^$$Nh2JF6QwxVo8V?Bt?DBeStZz?t!kU5ll|L2>BS^l>T
+z^L<LMR>)z_Og86?%ztD1)dD$1ZCmWDEY{%Qs<!6R$!?32pXmDZ7Y|r?>RFvF7oJxU
+zYcaOPGN0IMcG}m|c~!#v_zV6w&J@<y4l&MZ)~}jZZ&-ELCF|aA{_(c+_MG<eRf`@u
+z`eairFigIXhD&XJhVhPf*zQzF)D(o3i>;#wM?L`-6oaJY=y@f{kg>fHk8Beye<v+T
+zq>Kfz`pD8BALr;9&!a=O*>UGm<ZAYWq)?CbF+q0@XXDF5O{YT~aW9!e0p}Q6^p#4x
+zqeRWtfAlN4rLb(pld7JW#=i7ID^V1-aob9ozEe-otV8HJPa*nGDRWC->Be~_oM(n<
+zf5_K*%5qDgeeJ{yeti~X_ImsZ%G9hKj%@BYm80y@bG~CY_-hc_0B6mzN79eph~zZx
+z1M+jU_0(u&kB9x&Vs`2-)?QOOdx01u`b0@<lDWoY59lZg`%d|LeNMfpLZwMIS5gNQ
+zD{z=~Iyt9W@&c{u+e?~POy9Zo*x~8icT<#OMloLt(KXHM7%A#l%ooQ+zS^(Aq9`8Z
+zWNF(Qz2pnY$p%O*>xwqQb@29*=ciG&w-nh&5`Hz`DmkuBb;@piGqVhEwoED*ap9O!
+zDQ)Ro%|TyN({9vQQRusKS4puj=ZMp~aOS6S<r`O~y{+UJi!wLYCbmV?L5x>(Vak0r
+zM~gf4(Gok1oW@YHpOvlEfx!KNlH@XHOnd+n#$?1(08_Q|>4;}&$2%e3Sv%ep@ow7j
+z9*Fk@?4_O0M!Yv*AMJc!#QSN-2OvHW@G<TDV8oSxL$ve55YGjCTsuDk@sWU|wDV&S
+z9}DmRyxKLN76%bm0|I~=?OHA3I_-Eq;st<(+WGN_PXL^#ore)e08#C{5%D6xV(t7S
+z#3uuqwezKjmjRY*=Pig^wc}NYR|D2)=cgb(6>yq%emdea0PWg&3~>jbQ#+3%?gsQ|
+z=PVn-nK(}ZdbR7)>LlYdu4f$X$!Dzbd3Zjj`7FQ4nzU`{E8T4kKfHF*?y2tO|LCzZ
+zSSFI2ooz`El-&MTiuPjWCl8&xrsmdr*VP^|XU!g6>+Hy;4-GAX=Ji(SSHnJsln|vK
+zzp|5^&g&0;e&L<(-tqMVFF$L_<S*SZ^SHn73Kp^Qja)~O7RS=!Z|-ln>7jq@%74s{
+z{P-(-?7QuyhxS~2sn>2S2P6%J^GeEpX8dJ~CG~tE-9PDn_pQ){f4OGbr~k0?Pu^R0
+z9%n;Yb9@Nhtb^N!iNDn+#))4g?rzo;B9F_Ki@qxtm89h|Vs6x5C8p+F79RbjX+w>e
+zh}tG=w^MFXzmjXIa_3>LW0@@{WFB(r&}U1Ohx9v&0ha`9fRtFm7syEyS^t~EuG+PC
+zUc(cAe)mr|pZDg^=yh%7)xvB(_Y9MNiyJ>_L4NnBb|S6{OKQ1?E+sR)4>+ptlmmPF
+zJI=o6Q{R5$kdwdlO8fMMhuMt;2`d@P*y<f1X8YY^D9hoFpA|<xy-u80q&N5Jn|${l
+z_KTm~y*m8L(_i~-Po#z8G}bcbm~nA7ozjp0*|mQ<{nwS0|IG3~cl*_%$^<DnUp{)y
+z`wIhGr`!`=e(2A3Id%zWbXaqpt4Hdq8tdbK#!*2bL+;ylf28qqvwybh6_><gw>MpJ
+z$k5jUI2tQ^ow=7OWu|?-IU0B-4fUolDU-{tNLf(4|4MOO&$o>0G#dM`_T{KwHIMG@
+z7{8JB-rTiIwxw48m67A4Y%Rde_>I`<Kw@_!xcteIaCtU%vc5U#DDu9!KJrXzF3uVY
+z_nx_Cl;|+m9p|16Yzx5Z(NV%m=3ZgBOYHk|Xo4KCExk23cZ=z+#St^3zdlZKyH#0%
+zowB&g4MzwQ(D$5qmlN1aYY8^Dd-j%K>XoIfL51ihQa;hA<EoOCX}<AYJCAKKGveA&
+z#)*5Ri@6QdwajxHWL{BYD{Tp8^O12p)GW6pR`h{1_CHG5{+T87TI5+XJWIIyRUv&&
+zML7aEmv+R?iSyjl5wqS7OF6JLddQYChpil7#y5L)YS_?$opIbdcmHuX`64|m1m}4(
+z`>a^It?m7n-tOu8*39=3b{12hR&ao`pz6<IoKs@w3##`3vU{p-JeRWDi$Yi0)~#Zx
+zgTC=b^!@!4b6bD9>v_w6xtm?z&Mj4??Z1-0gf>v9F8lZHWdrX#vh?mNXTQH+<4)J^
+z%{hD4{wu8`!?j<Qj(^Sdy7|)Yo;By3gWov(?=yp!et6LBc4byD^WufOMu~r&WO2Uv
+zuYP#y<qDjCO8Lz3bCz$eXXU;9G4Aw3?IeHt^xAR`NZ-U)&QI!h<{^E~2W7~gezkbe
+z;h*%=#w~f<;W5+YKj7@!+Liq2(?a7Mm_BVI^lEXN|5c#>2ihmcu5~iEUD7{`Lyr2M
+z7mCV#7nDr9qZP*7X7bF=vyro9E-fh@x~$dvj!xKc{j}>!ijBLL-_8S&KK)me3^#kc
+za_Qp=Bt)q-GBXe5wnUlR6)~H=^gcg@_vy1W9@&TBy!#)FkRNRTvuAzkyl3<N*7`i>
+z0P3g@P>ug;$b))^dA8>Fm!h9RA7DAZR<3F>2<gI_###819!mK8O2)CdEWItjqPTG=
+zML8T;55F%iEYW8EHO>spHBVGg=pA6}O_Z`VF>5gT2#%dS%6?B}MLBpx^30vjye`G%
+z5&15AM38gjN85hkRiw}S`AGc&z=eQ|02c!;0elj0Dc~}|<$zBCt^iyKxC(GJ;2OZE
+z0oMXP1Nbc9bAamrp9fqIxB>75z>R<}0&W6)3GijWR{*yGZUNj1xDW7E!0mu-fI9(S
+z18fJ}1-J)rH{f2tzXP5E+z<FV;2VGk0N(_B3-BO-I@Ut~=|jc%G3{LHYsQ%OzlZzJ
+z0gTt>aficodA}Uv^Pvk~0Jsov5#VCLC4f%?E(I`8E=T++?YJCi+<~)m4&?8D1i|&r
+zf&H&zaGSkErsDjhe&;P5zNnq%PrpWg(dLN#A0u@(k7Ql?9j;JTFyu?W%0>T|J=8@2
+zxAZfUDDN2Zr=K_fD>&<l>twl2|8+b|naQAAr51&oo6f)$x0WZa6+r7tarQLXCXVFz
+z7%5mWY806JuhvyiBz<;mKJh$t)bNy;IOQ}klq0(Ne9?&cno+~ttnn2)en6a8jT+8Y
+zt}tuX=DYSb58`{;7~(sec{Id*?Wo~y=8xk0QpEa{QNuc4eRMxo9c^fCBJL-T8t$T3
+z&XJGYt6GWYpfV~12I84SEN0(wBtC_n?*K+mdzDIfL$NKP|79iC&f5fgKu|dfsjy7D
+z0kmH9Vg7L(_d|FpjiX-7rlQ}f@TbqlhwYO1ejGD=IgW8AzUaIXM;pB9gsq_sqm-MG
+z2HVD7)k?sAn^;+9Q2nO#ll8)mki?Hv5*SD+dkW=9=~~q*)QPH8nNlUjoHv43$U$-q
+z#w1EsdKB1~;<~b-w-?;nsq#2$L<cCdr>LiFC^FYT$(I}*=u^&eq_49~>7!mi8Rt}P
+z{bfp*Z0o$}=TH`Rs#4y(zLGtst_H=U(-RTt=Wo-pX9T1j%PUi+<<)|*FIp%QXa~rR
+z&fYpsoVvbjD9_dy=#kxuHBM+z?sqKP=ooNjQq`6MC>t@VVP9v;Rr={t!k(@(3+Acp
+zvaQs{d8tcst`A3<sZFv)(P!mXVl`KeHnk~XwWYDwbE&;jma(2tqo5oR{XFy6&ENJy
+zp2hG^%#pLoRcp+xMGY2QdgDXu*Go$tQ5t4!W`;Sp1IxxhR+u#>i92OEeV{p8!dcIt
+z{jVJRE!lEI_KnAnw5A7%S&rj^sn<C1+Ri;eVYVzbx3jX}%-k5y){Na9XptTU#9z`v
+zI?79f<tVgWNlEJ1!ev_qtu#;6miicn+!?MWV9mdYYa!bkq?%hM+AHj>YO)qFcUY6k
+zRj;-7>UYV?1NnrN;*XNfL~k-PXXrYMJaX2&tT|V%ydo);{pxI9kxy7Dp7^$*{c>=K
+zlU>Q0OXFP=pOu3~qvnpsOj<^HYwXi4R9j2!qhm+o>U3r)=-w7*&9#X>PP1=TUI{y;
+z^9YYMhbD%lW#_DX5SEyULaiM25xx6tYQ=pkwG(ZOYmcl_miZz_!;CpVyN3>~k#MAS
+zd0<OJYT2%_(6-aQzTq<`UEH)5jm@HPYlJ>)r5s~1`@YB(D2!Ky2R`kwDP@CldB+!z
+ze)EgZaY@Rd0Q@7nsd#eVwn6v|Y=H+rAI9e^VX0b<b-ZQZj6AWgM^fD(Fp3^)821+`
+z3$T}73*L(03IjQ50sQ)EVd?b`9np)AK6Gr81V+7x(E?3UZw&njJC4z6EN{{Kk-Cc5
+zwU2B3Nt~sRoU{{*HA|$fC*QaG@)UW~60={l64yp%HFIaLh<VCtP{9@d#JX6=4S7j;
+zEuI*gah}1Cwsn>i?ToaHcH*DdHUrzy<F-QP;1Ii$Mio1^Gc1T%XjCy{?aZG4Mm!de
+zDjvDZPv@%Tqly*nJt;^9)(DRN2;U>KN782OZb-XEO5=TLi7r>2L$)^AHg<BwI^=(O
+zj2P_jk(pT5G-?S_Qy?c!ywMXYg%icLWu@z*WbL%lUf%W_BQ>&}n|SrGm{H7ft*dfG
+zLiSCv?a=ZGmc0y=zaOPqykpFQe(`cd!kJg(6INa+Z>g8hYCSPD{T=o;IsZfUfZW>K
+zzW2c66|Gm#YQFKU*F6i?efQe^_Y(HDc8JSTT0rdAMlsu*bW4<*r_J`cD?ai1{=b2J
+zuB*)H@WR4D@6Q2cw&%AhMa5YeISyfOWn6%<oF;hNt%k+11#uIskc(l3WGK-3sJ^5B
+z+1UuiU0NSMj>BBmM|Wi|dipX=yA*R-C70mEvFCDUJ5~$u8yTyqeQu7N#k6f)<YX~6
+zFY1Hj_Oa&!H+DqXb6GdU8G`1qn4f6RQ_gb}<vK_9);V&}SX<}vQ<OH%wzQ|D9Lq-P
+z4fYg`2OT(n*|@cuQYRSyoM!g0SOW`wA7)CXFhAJYhd((1C=09O7Nn9|kL<6pSC()6
+z5w5qED{%dnLf2pU6+S4}AIYD7ZLZ|83Yu8|<ybuBcKwsr@a#0LOPW9ZI#=oY3P}H5
+zJiAT%YQFRXSo1DdC?@~^j1NAqeN^_$*<#0Vt=#Icv_=_uTGAxj_41aqTyx(lg(Zb7
+z#EDXJ?k$bwtJTnQWYl)7<+u*_%dG~QHPCFUk+^TAbmF$Eb5Mr4^$c@sY|WX`)ui&b
+zKQ*AoITX|W{0*ObLi=R?^z*NO#wX|p;<o+&C!Teye*~~5Os+uvgT6z2%5D0SP~<<?
+zKAMmIYIv#T3dQ6<b)N@ZrXR?^{$0WP-z=p6itF^LSvd#h|3cg*m%7dWIY|Fe?UVWQ
+zKd=5<@cM%XA^jh@PCvi?Ne-D`0R4v|{r_~Ge*XG*BEGetfb<VX`cJz~Kd<~LIRB4E
+z`s{-+<S+mH_5TEX=Qw~{{___^e_s8+VEXHk{trn!0&#Y?YNvSK`d`}pJEV5c-4D4-
+zqwu`b_d+!8bg5sZ?Y9%Xdam)!-Yz{*pGv*=^!HzU=&@Np2tN4KZqdu84bd)gpx9g(
+zpY(GrHLl>owOj=K|99D{(|>v2?)!Xv_S6ke{q~I`=4$lk=l?2ek(<uh{)BPmc<p<p
+zn+_+(8Tc=M`dnGoIZ*!VCFqWmLr7otfAgoGzx{~<y%4}H4>chD7d4XdrC(J7`%4qj
+ze@08c(7e-L8;Z77l+wmuT>ZCS{e6#x&)mG*Pd7jN!Kn}4efVRaJ9!__V5Ht{=?#&t
+z9&8_n^k@6w3mNe9m#+R@#U*$B`ozxH7Jl%v`Uj2}fgHGHOz4-Rd&XA5ZhZnlck0d$
+z*In7XY2Mt0|8~*bqfV$~FMRkVFZkerQKDaZ(zMyG!@#*FVr?PT7=4d{>^u=U^7M?*
+z2}eD)v31kC`Q=Z3{gbn5B3hn`T*>{v1oFpi|EH=1{ht*`|1J&1{Pd5!{<#wA|HO6r
+z`Ss5xe5(=QR)VcX`oGlDKl=C6Xa9ZHf!f=~TA@9VC%R+|_}^}Z%CS9vxNPk$Z`Qth
+z#+PIM8?U;P^Qn#0IOWZKqmF;JbmrQF?pOVN?&Xf_KHd4+o2&mP(6Z>Ae||vwup3J4
+z3-aM{LchKI%Do@*caE;V``ybs-Z=c8>*u|7^7;L=AQzewPmF8&Db3~D?Ad%HWcmC_
+z+wbsy*mKZ3H}BWE(_i2JHvM(n=R$t@m$(0EO3j|j%vakWf8NwC<xf9v|3lUP7i(0T
+zQ?fr>hxFaspYo^A7LvK-Bx9^tbRm7W_K!db^#6YcLbCreTKlKU`aKf65IlGA<u~~6
+zIeFc0-+Q~`{%3ES$@#(VIo@0vH;+>NXH6c2C1O1^wJ_wp`CR6XS$h-pd)|F_E!g<N
+zCDnb$-}?M%H~r;ndkuqHGwnRHUnM=iUr6o|4&m{_71MG(hiWhsIEuLrXXQ5fW%lvO
+z9{m#cjg)d!S_d&h|ECXcf2r*=S1h~u@mDY1-qLmAPMC7S8T!=hO4+|QuTZM{2Ai)7
+zJ`{7}Hz-$j{O(s@{Ze_)(&uV-x%_0U^b3B*OKM;Xn^b4Ha~;?Lc&{nS6mcu-pM1Rn
+zS4XoHhvTs+>Yv=Zo0{p_n9ZMo1(o~VQ+oH~C*@Tee4A5{YBA(T8~mGTb?nDcsn-*b
+zo*fforUj*gln~=Z4my{h(HGU~mtyCILyCGp;aE#{cNCf1D=FP64?c?f4y-Sma<f~z
+z)Xi${<vLGON?@lNH&`|$XRdKNUGm6z?MElt$AiCLG14a6Ph7Th6R#fbm{V=sVT%1e
+z?*AgS090Ppuk)i+iw^?L#mfR~&P^1#PMfBEu2?B9Z>h&IIU}7`>L!M!@5Vkb5%uLg
+zET!vJteUm4ymjjcEhVjy2CQK?TKfYQYWb3Mh_>5J`C6&t3XNlD|EZXSqOpX7)pLKu
+zQ(Yga_5^Aojh=9%KI{orRYwAKRle$Qoqy|=#>Un}a$|fTndn)cX)~R9JJbCGsSR7Y
+z=C}1EGVSS9axjxf^|f_(cgK1Y$<0FthC6A)$9iLlzW!KG+`B2(o7}SH+=lvaU7)Te
+z;_+AcYdwLg+FDP2Lp11#)K%4lYC;izeXwq;g$SHRAE}7W_u+SL)E5p%>Kf}kA%C>q
+z6Npy(J>dqQ-{WtL27^&wDAEwF*}A1Ao{Y!R@#a*I%NL^a+ZHvgY;TqHH8wU1`sBgT
+z9qrTJ%%%+JsS8)vRpEym^;LQN{;1zmS6A!v_z)WFYHMoiqg7e-?5jAJm2ox7Huyrj
+zU!{&~RCdFDGYAU~eZ^w1^z>t=2Su3;*j7@zmDGBM@7<>;hp5G`@7XD5CCL3NT0tE>
+zBslY*>C!h)*fqu2&3$7+DR(;RQS+X5M0#t`%F0y*)37+ulf%h_L&3~9MY(?1SWAmt
+z0BfQ8u<z<zQ!6ZcSaS`lepchTYIud$<JqOaF$()<AM&;r7<a<<XKcmU3lck)<u8Z-
+zx#??r?03w|f7^HI)W5Cx)~vTV?j}cdSh$}9d>_yX*bP$a1;ol^thkD%V;;<}f52%K
+z7J+>R@vLcB3jx==pjP|~=jXy?`x4>=2Fs`7`jtB=$|l4ghk7-D`2JlL<=+smz>vl3
+zh#S#8`32%yxDospV(;FH5<|QVPGdbh-xs*ydrkW(%KL~<fkBxb)zJeK<#)Kh;$w>P
+zTf}V;rCSmIsZvoqh>t&1QEta`Qw~#<?;w5^F=={quA=-I@sF^81HH5NIszWmh&LaJ
+zi-@m33eV#3%A*zKF~sf1i1!-iDauCN|1XcCyo~EV^(xAJi0{O7$R`nB1Lwuh;eHD;
+z^G`Tmk73GZ5wC(%$qx~qScBzlasPBUdH)mVTi{B*H_q?FkS5cU`7dQk_Kf)JN;ZCG
+z-xA9`TgB?Sc9Kif>JKjX-K)1Zr|*0J)?Ge`UNz|iFvJiwk}9ETk!z(SV0J$_>^ij>
+zJSxWR<vzjs$cirWq<zC_L{#4A8@fjq&+>T$D9Rkrag8fF#@k-Yl4^Z*sU7y8iMY1q
+z4*Smz`w!)szV5;f`_GOw_4GOcC1fbDo$kO{IgcQ^w-4;F|5z;~wEyfVfA+8{;paWF
+zmau&OmjRdl_bsTO)T@UoZH@!>xE|H+=S#n)1oMyC)9aoj5XhfCx==X+=bxR7`}8Ps
+zOaEmC`g45R^)1<-ahtyJ!z)#b&zWe4#cD{#{)ODf!1%oNnDno}#ianZ>3@I+<#(*<
+zFH&t+gRp}bF_BMa$44T4bov!^yhkK`_T0F)gS*seg(-afBP0D`q{kjz9Ocl5ej}|V
+z>^1hmE|ktDH|t7e5$Uf7|G@yFhN*t9&+F%59G+gJ{Y=<!Hex*ku@Ac0nj@{<x<3rx
+z#OH<rkF~0$U9;~A3wu#gUHQ%WL^mvww0|Xm2WRlo*RBViv$Rj1jVm3%uv5J%X1I2!
+z`PHVScP(st^YKIvu4a^We97+nv>ec4MGV@I9)J23`*-r;M4O_WMPev(fKOcAMVGsA
+z$5iTQ{Xekfsq?>A|3br~H+C#sT)E)<DX<=~k8iae==e!{f_}w~#eqC+^+9fnb@e9t
+z2Gj8Y80}%24h18%fk3Fv<7)_nJb}hY5T@y1$m0tJs_LqJHGyDlV5?4$ILbCn!_KC_
+z=B7j+lP36JW1yxsQXTO4qJc(Fz#sH`LUlD^Pq-==s;@?hHGz5#Dl~c<`Z9^kW{fDv
+z!(xULy1jAn8I?Yr%7IieKBAPu!l<w_8+~Y;Q95iYNtp;oKEc5NPMD2izJM4~8LRS)
+z_YL-TV3cOq<Y~025lN*7Zxqvk1bKD-NKH-Eco_p5HnFUaBK+}jP9Wg9UN^@Vu{#F*
+zL`h{!RbI!40z+DDIpqrF*`8zUMXtkh`TEQ&(Ly@49eV3hNPFXCx96N~wrCl(#kF6T
+zw?)&1q&=SF>G!y@V>cRF??SL;o5&G2>lox(WeI%SsgH3#JNmaLlyeZvHraVx4nsG}
+z_EEyw+M=8D*nD?2D4>o<-Hqd<GLNbJ4SyWb-I#|NBhF<v@&so_Nh~FH7|2pCC~0n*
+zao}0@{&zx|xvr#mxT`l2a3aU()94q=JYws0X_2_;`k)+nVHxS;O)?D(JR;?hpT$zT
+z@xw;s4`~s#yHL)1=trSL&)V-lk2~Y94X>S9`<)Ll(5&_^jeTwQE84KWKUXGV|1FJw
+jFKX5%fan$7Qi2?l(#=SnaUBeO9VGkJkvL|rdq4a?W|ggP
+
+delta 2474
+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
+
+diff --git a/FFFamilySolution/FFSilverlight.Web/FFSilverlight.Web.csproj b/FFFamilySolution/FFSilverlight.Web/FFSilverlight.Web.csproj
+index cbd7258..4cbe4ee 100644
+--- a/FFFamilySolution/FFSilverlight.Web/FFSilverlight.Web.csproj
++++ b/FFFamilySolution/FFSilverlight.Web/FFSilverlight.Web.csproj
+@@ -51,6 +51,8 @@
+     <Reference Include="System.EnterpriseServices" />
+   </ItemGroup>
+   <ItemGroup>
++    <Content Include="ClientBin\FFSilverlight.xap" />
++    <Content Include="Default.aspx" />
+     <Content Include="FFSilverlightTestPage.aspx" />
+     <Content Include="FFSilverlightTestPage.html" />
+     <Content Include="Silverlight.js" />
+@@ -63,10 +65,21 @@
+     </Content>
+   </ItemGroup>
+   <ItemGroup>
++    <Compile Include="Default.aspx.cs">
++      <DependentUpon>Default.aspx</DependentUpon>
++      <SubType>ASPXCodeBehind</SubType>
++    </Compile>
++    <Compile Include="Default.aspx.designer.cs">
++      <DependentUpon>Default.aspx</DependentUpon>
++    </Compile>
+     <Compile Include="Properties\AssemblyInfo.cs" />
+   </ItemGroup>
++  <ItemGroup />
+   <ItemGroup>
+-    <Folder Include="ClientBin\" />
++    <ProjectReference Include="..\FFF.Core\FFF.Core.csproj">
++      <Project>{B453FE90-B582-486A-A305-27814D3C9D64}</Project>
++      <Name>FFF.Core</Name>
++    </ProjectReference>
+   </ItemGroup>
+   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+diff --git a/FFFamilySolution/FFSilverlight.Web/FFSilverlight.Web.csproj.user b/FFFamilySolution/FFSilverlight.Web/FFSilverlight.Web.csproj.user
+index 04a5ffd..b390cda 100644
+--- a/FFFamilySolution/FFSilverlight.Web/FFSilverlight.Web.csproj.user
++++ b/FFFamilySolution/FFSilverlight.Web/FFSilverlight.Web.csproj.user
+@@ -4,7 +4,7 @@
+     <VisualStudio>
+       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+         <WebProjectProperties>
+-          <StartPageUrl>FFSilverlightTestPage.aspx</StartPageUrl>
++          <StartPageUrl>Default.aspx</StartPageUrl>
+           <StartAction>SpecificPage</StartAction>
+           <AspNetDebugging>True</AspNetDebugging>
+           <SilverlightDebugging>True</SilverlightDebugging>
+diff --git a/FFFamilySolution/FFSilverlight.Web/Web.config b/FFFamilySolution/FFSilverlight.Web/Web.config
+index ea5e4d6..bc34c9f 100644
+--- a/FFFamilySolution/FFSilverlight.Web/Web.config
++++ b/FFFamilySolution/FFSilverlight.Web/Web.config
+@@ -6,7 +6,11 @@
+   -->
+ 
+ <configuration>
+-    <system.web>
++  <connectionStrings>
++    <!-- CouchDB -->
++    <add name="CouchDB" connectionString="Database=ffdb;Server=http://localhost:5984;User=sa;Password=marklin"/>
++  </connectionStrings>  
++  <system.web>
+         <compilation debug="true" targetFramework="4.0" />
+     </system.web>
+ 
+diff --git a/FFFamilySolution/FFSilverlight.Web/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache b/FFFamilySolution/FFSilverlight.Web/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+index 39268a22e225d168eeb7b3d30589fc90d11328cb..cd236c8d15e4fdb560d47e962d6d920e65879aa9 100644
+GIT binary patch
+delta 585
+zcmY+8-A)rh6vsQHGwJqoyJ^~85U}DG3JcY!h<c$kE0{<GjBr7;Q<!cSXSbxx3Z&^n
+z$hqZ$dv8qO$~W*mOne6u6VI+K(MitaoZtU{KE5qnEPlPv(xZt)f>rR_gf;7FbxC?6
+zP%pe-+i^BL`AKx8=eCu7#P^wruI0#O)J2PjQrY}q|A<+L-$fXHX=5~+H>}F(w(=z#
+zL-Z;#l>VK#cfhWo;KZG0nPh6G6SO>+jYB@OMkb(<*`SkXSV6<glw&V-x?;PDht)+h
+zbn(2u$ljHbT}7V@XVyBTvt?3+YIc`iL-sLd^TibW$QpDCNpncj(Y(0%I(*0-(;NSZ
+zb*^|U-h}7*CcTBC7<T6BU4G~VZmi#iLLsEnsD}eR3qK1cxpSho=v~DACH}7KbOuR#
+zKq_<=D><lg@THiiHj=%V=!Qk+PW1QMmM`N?^XH!pPAfHZ3}2C9MljetIJGvRVQQuO
+zSSFoNN|M5iVrVt!n-k;#oSNg44-pu>WiL=~xN1Ayj=!RW-)E1IkM`ce+(<cj+-D1*
+lQZGx75$1a9{Lt~FSmnOxvqgAqt&%6Wu0d+&zpZB@e*l|zl&$~(
+
+delta 451
+zcmXwz%S!@L6vn;by`|GQJ{CTvwD&uU-t-`&u%gf~Xi*?sbFhgSGiS<7q;@S@v^e|d
+zFNi=PXxF|!rA@0=LB~NaoXhw9?)M#TefeYQt?poco6W}j@aa5a+$h|z0Ll{*gl-{8
+zLZAzKRK~<UTnaJx6GYmDE@8Q3r$oBpwNoQuki{&Cz`a-?J@6yuXfLKrSeK6B-6fMg
+zWNGIXH+eLxX{;YsqzoB=XX%^{Vz6KZb8bHwf;;yu9Y)42_TshEMq>oHr$|SUpEWs^
+z@}_E*t$kz2wI=t`adhXcw)apeUaO~yVFf3w#ZSJpwRE!f=;Kt5B5WNGLq%}d6kaKa
+zh^erry~U<c*yC54MmkVY97hyN!SLb?%0Ok4=d)^-o63e^D0)UK$5l-+s%#cty_Fp`
+zZys>-EMC0OcTGjFvN`w)M#wyT2e$(Ym=P-}UTSm_Tvw`W5m5|!g;jV6x#$u)>p$=v
+Ma*}B6H?-FF4|vdSga7~l
+
+-- 
+1.7.3.1.msysgit.0
+

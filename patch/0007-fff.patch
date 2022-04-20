@@ -1,0 +1,266 @@
+From 5613f2cb87ed91fddae74bad831345819a0ab6b3 Mon Sep 17 00:00:00 2001
+From: wbtsai <wbtsai@msn.com>
+Date: Wed, 22 Dec 2010 00:10:40 +0800
+Subject: [PATCH 7/7] fff
+
+---
+ FFFamilySolution/FFF.Entity/Admin/AdminUser.cs     |   38 ----------------
+ FFFamilySolution/FFF.Entity/Admin/AdminUserRole.cs |   18 --------
+ FFFamilySolution/FFF.Entity/EnumBase.cs            |   46 +++++++++++++++++++-
+ FFFamilySolution/FFF.Entity/FFF.Entity.csproj      |    5 +-
+ FFFamilySolution/FFF.Entity/Family/FamilyUser.cs   |    8 +++-
+ FFFamilySolution/FFFamilySolution.suo              |  Bin 120832 -> 120832 bytes
+ 6 files changed, 54 insertions(+), 61 deletions(-)
+ delete mode 100644 FFFamilySolution/FFF.Entity/Admin/AdminUser.cs
+ delete mode 100644 FFFamilySolution/FFF.Entity/Admin/AdminUserRole.cs
+
+diff --git a/FFFamilySolution/FFF.Entity/Admin/AdminUser.cs b/FFFamilySolution/FFF.Entity/Admin/AdminUser.cs
+deleted file mode 100644
+index 42f6f7e..0000000
+--- a/FFFamilySolution/FFF.Entity/Admin/AdminUser.cs
++++ /dev/null
+@@ -1,38 +0,0 @@
+-﻿using System;
+-using System.Collections.Generic;
+-using System.Linq;
+-using System.Text;
+-
+-namespace FFF.Entity.Admin
+-{
+-    public class AdminUser
+-    {
+-        /// <summary>
+-        /// Admin ID
+-        /// </summary>
+-        public string AdminID { get; set; }
+-
+-        /// <summary>
+-        /// Admin Password
+-        /// </summary>
+-        public string AdminPassword { get; set; }
+-
+-        /// <summary>
+-        /// Admin Role
+-        /// </summary>
+-        public EnumAdminRole AdminRole { get; set; }
+-
+-        /// <summary>
+-        /// 
+-        /// </summary>
+-        public bool IsEnable { get; set; }
+-
+-
+-        public DateTime EnableTime { get; set; }
+-
+-        public DateTime DisableTime { get; set; }
+-               
+-        
+-
+-    }
+-}
+diff --git a/FFFamilySolution/FFF.Entity/Admin/AdminUserRole.cs b/FFFamilySolution/FFF.Entity/Admin/AdminUserRole.cs
+deleted file mode 100644
+index 1f8a059..0000000
+--- a/FFFamilySolution/FFF.Entity/Admin/AdminUserRole.cs
++++ /dev/null
+@@ -1,18 +0,0 @@
+-﻿using System;
+-using System.Collections.Generic;
+-using System.Linq;
+-using System.Text;
+-
+-namespace FFF.Entity.Admin
+-{
+-    /// <summary>
+-    /// Admin Role
+-    /// </summary>
+-    public enum EnumAdminRole
+-    { 
+-        /// <summary>
+-        /// Admin
+-        /// </summary>
+-        Administrator
+-    }
+-}
+diff --git a/FFFamilySolution/FFF.Entity/EnumBase.cs b/FFFamilySolution/FFF.Entity/EnumBase.cs
+index c21f8fc..3f436db 100644
+--- a/FFFamilySolution/FFF.Entity/EnumBase.cs
++++ b/FFFamilySolution/FFF.Entity/EnumBase.cs
+@@ -5,5 +5,49 @@ using System.Text;
+ 
+ namespace FFF.Entity
+ {
+-    
++    /// <summary>
++    /// Sex
++    /// </summary>
++    public enum EnumSex
++    { 
++        /// <summary>
++        /// Male
++        /// </summary>
++        M,
++        /// <summary>
++        /// Female
++        /// </summary>
++        F
++    }
++
++    /// <summary>
++    /// Role
++    /// </summary>
++    public enum EnumRole
++    { 
++        /// <summary>
++        /// Admin
++        /// </summary>
++        Admin,
++
++        /// <summary>
++        /// User
++        /// </summary>
++        User,
++
++        /// <summary>
++        /// Guest
++        /// </summary>
++        Guest
++    }
++
++    /// <summary>
++    /// Unit Role
++    /// </summary>
++    public enum EnumUnitRole
++    { 
++        Admin,
++
++        User
++    }
+ }
+diff --git a/FFFamilySolution/FFF.Entity/FFF.Entity.csproj b/FFFamilySolution/FFF.Entity/FFF.Entity.csproj
+index e6f5d85..a7594ea 100644
+--- a/FFFamilySolution/FFF.Entity/FFF.Entity.csproj
++++ b/FFFamilySolution/FFF.Entity/FFF.Entity.csproj
+@@ -40,11 +40,12 @@
+     <Reference Include="System.Xml" />
+   </ItemGroup>
+   <ItemGroup>
+-    <Compile Include="Admin\AdminUser.cs" />
+-    <Compile Include="Admin\AdminUserRole.cs" />
+     <Compile Include="EnumBase.cs" />
+     <Compile Include="Family\FamilyUser.cs" />
+     <Compile Include="Properties\AssemblyInfo.cs" />
++    <Compile Include="Unit\Family.cs" />
++    <Compile Include="Unit\OrganizationUnit.cs" />
++    <Compile Include="Unit\Unit.cs" />
+   </ItemGroup>
+   <ItemGroup>
+     <Folder Include="Expense\" />
+diff --git a/FFFamilySolution/FFF.Entity/Family/FamilyUser.cs b/FFFamilySolution/FFF.Entity/Family/FamilyUser.cs
+index b3268f3..4be8f5f 100644
+--- a/FFFamilySolution/FFF.Entity/Family/FamilyUser.cs
++++ b/FFFamilySolution/FFF.Entity/Family/FamilyUser.cs
+@@ -5,14 +5,18 @@ using System.Text;
+ 
+ namespace FFF.Entity.Family
+ {
++    /// <summary>
++    /// 家庭成員
++    /// </summary>
+     public class FamilyUser
+     {
+         public string UserID { get; set; }
+ 
+         public string UserName { get; set; }
+ 
+-        public string Email { get; set; }
++        public EnumSex Sex { get; set; }
+ 
+-        public string UserRole { get; set; }
++        public List<EnumRole> RoleList { get; set; }
++        
+     }
+ }
+diff --git a/FFFamilySolution/FFFamilySolution.suo b/FFFamilySolution/FFFamilySolution.suo
+index 2834c424e00396a44224df36326a88122e4e7131..5af56ccd8c4bf02093907b81f1e8bd0b7fafe253 100644
+GIT binary patch
+delta 3513
+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
+T<Db8uE|zQxGR8S*irD@G7KDW-
+
+delta 2329
+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
+BTg(6e
+
+-- 
+1.7.3.1.msysgit.0
+

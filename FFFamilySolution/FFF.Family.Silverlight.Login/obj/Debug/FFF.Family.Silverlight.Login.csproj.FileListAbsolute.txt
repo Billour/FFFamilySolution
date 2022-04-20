@@ -1,0 +1,8 @@
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Family.Silverlight.Login\Bin\Debug\FFF.Family.Silverlight.Login.dll
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Family.Silverlight.Login\Bin\Debug\FFF.Family.Silverlight.Login.pdb
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Family.Silverlight.Login\obj\Debug\ResolveAssemblyReference.cache
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Family.Silverlight.Login\obj\Debug\Views\LoginUserControl.g.i.cs
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Family.Silverlight.Login\obj\Debug\Views\RegisterUserControl.g.i.cs
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Family.Silverlight.Login\obj\Debug\FFF.Family.Silverlight.Login.g.resources
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Family.Silverlight.Login\obj\Debug\FFF.Family.Silverlight.Login.dll
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Family.Silverlight.Login\obj\Debug\FFF.Family.Silverlight.Login.pdb

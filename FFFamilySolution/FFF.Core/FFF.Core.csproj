@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B453FE90-B582-486A-A305-27814D3C9D64}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FFF.Core</RootNamespace>
+    <AssemblyName>FFF.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Http, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\Microsoft.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Http.Extensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\Microsoft.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.QueryComposition, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\Microsoft.QueryComposition.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.Http, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\Microsoft.ServiceModel.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.Http.Client">
+      <HintPath>dlls\Microsoft.ServiceModel.Http.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.WebHttp">
+      <HintPath>dlls\Microsoft.ServiceModel.WebHttp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activation" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\EnumDescriptionAttribute.cs" />
+    <Compile Include="CouchDB\CouchDBDataContext.cs" />
+    <Compile Include="CouchDB\Entity\CouchDBEntity.cs" />
+    <Compile Include="CouchDB\Entity\CouchResponseMessage.cs" />
+    <Compile Include="CouchDB\Entity\CouchDBViewList.cs" />
+    <Compile Include="CouchDB\Entity\DBConfig.cs" />
+    <Compile Include="CouchDB\Entity\DBContentConfig.cs" />
+    <Compile Include="CouchDB\Entity\DBView.cs" />
+    <Compile Include="CouchDB\Entity\ITable.cs" />
+    <Compile Include="CouchDB\Entity\View.cs" />
+    <Compile Include="CouchDB\EnumBase.cs" />
+    <Compile Include="CouchDB\Extensions\CouchDBExtensions.cs" />
+    <Compile Include="Data\Attributes\ColumnNameAttribute.cs" />
+    <Compile Include="Data\Attributes\DataContextColumnAttribute.cs" />
+    <Compile Include="Data\Attributes\DataContextMapAttribute.cs" />
+    <Compile Include="Data\Attributes\SQLPrefixAttribute.cs" />
+    <Compile Include="Data\DataContext.cs" />
+    <Compile Include="Data\EnumBase.cs" />
+    <Compile Include="Data\Extensions\DataContextExtension.cs" />
+    <Compile Include="Helper\EnumHelperExtensions.cs" />
+    <Compile Include="Helper\HtmlParser\HtmlAttribute.cs" />
+    <Compile Include="Helper\HtmlParser\HtmlDocument.cs" />
+    <Compile Include="Helper\HtmlParser\HtmlElement.cs" />
+    <Compile Include="Helper\HtmlParser\HtmlEncoder.cs" />
+    <Compile Include="Helper\HtmlParser\HtmlNode.cs" />
+    <Compile Include="Helper\HtmlParser\HtmlParser.cs" />
+    <Compile Include="Helper\HtmlParser\HtmlText.cs" />
+    <Compile Include="Helper\MailHelper.cs" />
+    <Compile Include="Helper\RegularExpressionExtension.cs" />
+    <Compile Include="Helper\XMLSerializationExtension.cs" />
+    <Compile Include="Logic\ReflectionLogic.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dlls\log4net.dll" />
+    <Content Include="dlls\Microsoft.Http.dll" />
+    <Content Include="dlls\Microsoft.Http.Extensions.dll" />
+    <Content Include="dlls\Microsoft.QueryComposition.dll" />
+    <Content Include="dlls\Microsoft.ServiceModel.Http.dll" />
+    <Content Include="dlls\System.Data.SQLite.dll" />
+    <Content Include="Helper\dummy.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Helper\HtmlParser\vssver2.scc" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

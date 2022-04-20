@@ -1,0 +1,5 @@
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Silverlight.Entity\Bin\Debug\FFF.Silverlight.Entity.dll
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Silverlight.Entity\Bin\Debug\FFF.Silverlight.Entity.pdb
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Silverlight.Entity\obj\Debug\ResolveAssemblyReference.cache
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Silverlight.Entity\obj\Debug\FFF.Silverlight.Entity.dll
+D:\GIT_Solution\FFFamily\FFFamilySolution\FFF.Silverlight.Entity\obj\Debug\FFF.Silverlight.Entity.pdb
